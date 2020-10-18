@@ -5,7 +5,7 @@ import pandas as pd
 from login_sign_up import *
 
 from miscellaneous import *
-from home_data_continue_learning import home_data
+# from home_data_continue_learning import home_data
 
 
 
