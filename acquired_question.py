@@ -5,8 +5,8 @@ import string
 import random
 import requests
 import sys
-import multiprocessing
 import traceback
+import multiprocessing
 import pandas as pd
 import ast
 
@@ -138,61 +138,79 @@ if __name__ == '__main__':
     # goals = {'Engineering':'5f17102be61885046e5d9780'}
     df = pd.DataFrame(columns=['Goal', 'Book_ID', 'Exam', 'Subject', 'Unit', 'Chapter', 'Chapter Id', 'Question Id'])
     df.to_csv("Chapter_Questions.csv", index=False)
-    df = pd.read_csv("Book_data.csv")
-    df = df.drop_duplicates()
+    # df = pd.read_csv("Book_data.csv")
+    # print(df)
+    # df =  df.drop_duplicates(subset='book_id', keep="first")
+    # print(df)
+    # df.to_csv("Book_data.csv",index=False)
+    df=pd.read_csv("Book_data.csv")
+    # print(df)
     for ind in df.index:
         try:
             home_data = {'goal': df["goal"][ind],
                          'Book_ID': df["book_id"][ind],
                          "exam": df["Exam"][ind], "subject": "", "unit": "", "chapter_name": "", "chapter_id": ""}
             var = "https://content-demo.embibe.com/fiber_app/learning_maps/filters/" + str(df["book_id"][ind])
+            print(var)
             src.get_chapters(home_data, var)
         except Exception as e:
+
+            print(e)
             home_data = {'goal': df["goal"][ind],
                          'Book_ID': df["book_id"][ind],
                          "exam": df["Exam"][ind], "subject": "", "unit": "", "chapter_name": "", "chapter_id": ""}
             df1 = pd.read_csv("Chapter_Questions.csv")
+            var = "https://content-demo.embibe.com/fiber_app/learning_maps/filters/" + str(df["book_id"][ind])
+            print(var, '\n')
+            print("\t\t\t\t\t\tSOMETHING WENT WRONG FOR ABOVE URL")
+            print("------------------------------------------------------------------------------------")
+            print("------------------------------------------------------------------------------------")
+            print("------------------------------------------------------------------------------------")
+            print("------------------------------------------------------------------------------------")
+            print("------------------------------------------------------------------------------------")
             df1.loc[len(df1)] = [home_data['goal'], home_data['Book_ID'], home_data['exam'],
                                  home_data['subject'], home_data['unit'],
                                  home_data['chapter_name'], home_data['chapter_id'],
                                  "error"]
             df1.to_csv("Chapter_Questions.csv", index=False)
 
-    df = pd.read_csv("Question_bank.csv").drop_duplicates()
-    df1 = pd.read_csv("Chapter_Questions.csv").drop_duplicates()
-    df2 = pd.read_csv("Chapter_hygiene.csv").drop_duplicates()
-    list1 = [""] * len(df1)
-    df1["Present in CG"] = list1
-    for ind in df1.index:
-        df_new = df.loc[df["id"] == df1["Question Id"][ind]]
-        if len(df_new) > 0:
-            df1["Present in CG"][ind] = "yes"
-        else:
-            df1["Present in CG"][ind] = "no"
-    df1.to_csv("Chapter_Questions.csv", index=False)
-
-    list1 = [""] * len(df2)
-    df2["Questions Live"] = list1
-    for ind in df2.index:
-        flag = 0
-        df_new = df1.loc[df1["Exam"] == df2["Exam"][ind]]
-        if len(df_new) > 0:
-            df_new1 = df1.loc[df1["Goal"] == df2["Goal"][ind]]
-            if len(df_new1) > 0:
-                df_new2 = df1.loc[df1["Chapter"] == df2["Chapter Name"][ind]]
-                if len(df_new2) > 0:
-                    for ink in df_new2.index:
-                        if df_new2["Present in CG"][ink] == "no":
-                            flag = 1
-                            break
-                        else:
-                            continue
-                    if flag == 1:
-                        df2["Questions Live"][ind] = "no"
-                    else:
-                        df2["Questions Live"][ind] = "yes"
-                else:
-                    df2["Questions Live"][ind] = "Not found"
-        else:
-            df2["Questions Live"][ind] = "Not found"
-    df2.to_csv("Chapter_hygiene.csv", index=False)
+    # df = pd.read_csv("Question_bank.csv").drop_duplicates()
+    # df1 = pd.read_csv("Chapter_Questions.csv").drop_duplicates()
+    # df2 = pd.read_csv("Chapter_hygiene.csv").drop_duplicates()
+    # list1 = [""] * len(df1)
+    # df1["Present in CG"] = list1
+    # for ind in df1.index:
+    #     df_new = df.loc[df["id"] == df1["Question Id"][ind]]
+    #     if len(df_new) > 0:
+    #         df1["Present in CG"][ind] = "yes"
+    #     else:
+    #         df1["Present in CG"][ind] = "no"
+    # df1.to_csv("Chapter_Questions.csv", index=False)
+    #
+    # list1 = [""] * len(df2)
+    # df2["Questions Live"] = list1
+    # for ind in df2.index:
+    #     flag = 0
+    #     df_new = df1.loc[df1["Exam"] == df2["Exam"][ind]]
+    #     if len(df_new) > 0:
+    #         df_new1 = df1.loc[df1["Goal"] == df2["Goal"][ind]]
+    #         if len(df_new1) > 0:
+    #             df_new2 = df1.loc[df1["Chapter"] == df2["Chapter Name"][ind]]
+    #             if len(df_new2) > 0:
+    #                 for ink in df_new2.index:
+    #                     if df_new2["Present in CG"][ink] == "no":
+    #                         flag = 1
+    #                         break
+    #                     else:
+    #                         continue
+    #                 if flag == 1:
+    #                     df2["Questions Live"][ind] = "no"
+    #                 else:
+    #                     df2["Questions Live"][ind] = "yes"
+    #             else:
+    #                 df2["Questions Live"][ind] = "Not found"
+    #         else:
+    #             df2["Questions Live"][ind] = "Not found"
+    #     else:
+    #         df2["Questions Live"][ind] = "Not found"
+    # df2.to_csv("Chapter_hygiene.csv", index=False)
