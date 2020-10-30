@@ -17,9 +17,10 @@ def for_all_exam_goal(goal_exam_grade):
         # child_data=add_user(signup_data[1],login_data[0])
         embibe_token=login_data[1]
         child_id=signup_data[1]
-        home_data(child_id, goal_exam_grade["Goal"][ind], goal_exam_grade["Grade"][ind],
+        home_data(3721404, goal_exam_grade["Goal"][ind], goal_exam_grade["Grade"][ind],
                   goal_exam_grade["Exam_name"][ind],
-                  goal_exam_grade["Goal"][ind],embibe_token)
+                  goal_exam_grade["Goal"][ind],'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoic3R1ZGVudCIsInRpbWVfc3RhbXAiOiIyMDIwLTEwLTE1IDE3OjQyOjI2IFVUQyIsImlzX2d1ZXN0IjpmYWxzZSwiaWQiOjM3MjE0MDQsImVtYWlsIjoiMzYxNTU5NF8xNjAyNzgzNzQ2QGVtYmliZS11c2VyLmNvbSJ9.QYI2fB25BRp4c8KNkHIKSOSYLvxARKIDGxJXstk5OMqmlZiQ-E2kult1tDHHKP7eNtNnh4-upBdjmFQeM8CkVw')
+        # break
 
 
 if __name__ == '__main__':
@@ -27,26 +28,28 @@ if __name__ == '__main__':
     df_negative_results_all_subjects = pd.DataFrame(columns=['Child_ID', 'Exam', 'Goal', "Grade",
                                                              'Duration', 'Type', 'Id', "Title", 'Section_name',
                                                              'Embium_counts', "Subject", "Subject_tagged",
-                                                             "present in subject", "Correctly present in CG"])
+                                                             "present in subject", "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present"])
     df_positive_results_all_subjects = pd.DataFrame(columns=['Child_ID', 'Exam', 'Goal', "Grade",
                                                              'Duration', 'Type', 'Id', "Title", 'Section_name',
                                                              'Embium_counts', "Subject", "Subject_tagged",
-                                                             "present in subject", "Correctly present in CG"])
+                                                             "present in subject", "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present"])
     df_negative_results_all_subjects.to_csv("negative_learn_results_all_subjects.csv", index=False)
     df_positive_results_all_subjects.to_csv("positive_learn_results_all_subjects.csv", index=False)
     df_negative_results = pd.DataFrame(columns=['Child_ID', 'Exam', 'Goal', "Grade",
                                                 'Duration', 'Type', 'Id', "Title", 'Section_name',
                                                 'Embium_counts', "Subject", "Subject_tagged", "present only once",
-                                                "Correctly present in CG"])
+                                                "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present"])
     df_positive_results = pd.DataFrame(columns=['Child_ID', 'Exam', 'Goal', "Grade",
                                                 'Duration', 'Type', 'Id', "Title", 'Section_name',
                                                 'Embium_counts', "Subject", "Subject_tagged", "present only once",
-                                                "Correctly present in CG"])
+                                                "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present"])
     df_negative_results.to_csv("negative_learn_results.csv", index=False)
     df_positive_results.to_csv("positive_learn_results.csv", index=False)
 
     goal_exam_grade = goal_exam_grade_extractor()
     for_all_exam_goal(goal_exam_grade)
+
+    # print("\n\n COMPARING")
     comparator("positive_learn_results_all_subjects.csv", "positive_learn_results.csv")
     video_book_validation(pd.read_csv("positive_learn_results_all_subjects.csv"),"positive_learn_results_all_subjects.csv")
 

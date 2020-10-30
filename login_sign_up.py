@@ -19,8 +19,10 @@ def Signup():
 	password = "embibe1234"
 	res = string_generator(8)
 	signup_data = {"login":"test_user_"+res+"@gmail.com","password":password, "flag":"sp"}
+	# print("dankja")
 	response = requests.post(url, data=json.dumps(signup_data))
-	# print("\t",response)
+
+	print("\t",response)
 	json_dict = json.loads(response.text)
 	print("\tUser signed up")
 	print("\tEmail: ","test_user_"+res+"@gmail.com")
