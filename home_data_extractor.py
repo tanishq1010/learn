@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import json
+import random
 from openpyxl import Workbook, load_workbook
 from miscellaneous import *
 from subject_data_extractor import subject_data_extractor
@@ -87,11 +88,11 @@ class Source(object):
                     subject_tagged = data["subject"]
                     if title == "" or description == "" or length == "" or length == 0 or currency < 0 or id == "" or Type == "":
                         length=minutes_converter(length)
-                        df_negative_results_all_subjects.loc[len(df_negative_results_all_subjects)] = home_data + [length, Type, id, title,section_name,currency,"All Subjects", subject_tagged,"",""]
+                        df_negative_results_all_subjects.loc[len(df_negative_results_all_subjects)] = home_data + [length, Type, id, title,section_name,currency,"All Subjects", subject_tagged,"","","","","",""]
                         df_negative_results_all_subjects.to_csv("negative_learn_results_all_subjects.csv", index=False)
                     else:
                         length=minutes_converter(length)
-                        df_positive_results_all_subjects.loc[len(df_positive_results_all_subjects)] = home_data + [length, Type, id, title,section_name,currency,"All Subjects", subject_tagged,"",""]
+                        df_positive_results_all_subjects.loc[len(df_positive_results_all_subjects)] = home_data + [length, Type, id, title,section_name,currency,"All Subjects", subject_tagged,"","","","","",""]
                         df_positive_results_all_subjects.to_csv("positive_learn_results_all_subjects.csv", index=False)
 
             if (item["contentType"] == "learn_chapter"):
@@ -109,14 +110,51 @@ class Source(object):
                     Type = data["type"]
                     subject_tagged = data["subject"]
                     if title == "" or id == "" or Type == ""or description=="":
-                        df_negative_results_all_subjects.loc[len(df_negative_results_all_subjects)] = home_data + ["", Type, id, title,section_name,"","All Subjects", subject_tagged,"",""]
+                        df_negative_results_all_subjects.loc[len(df_negative_results_all_subjects)] = home_data + ["", Type, id, title,section_name,"","All Subjects", subject_tagged,"","","","","",""]
                         df_negative_results_all_subjects.to_csv("negative_learn_results_all_subjects.csv", index=False)
                     else:
-                        df_positive_results_all_subjects.loc[len(df_positive_results_all_subjects)] = home_data + ["", Type, id, title,section_name,"","All Subjects", subject_tagged,"",""]
+                        df_positive_results_all_subjects.loc[len(df_positive_results_all_subjects)] = home_data + ["", Type, id, title,section_name,"","All Subjects", subject_tagged,"","","","","",""]
                         df_positive_results_all_subjects.to_csv("positive_learn_results_all_subjects.csv", index=False)
 
+        home_data = [child_id, exam, goal,grade]
+        Embibe_Explainers = False
+        for item in response1.json():
+            if str(item["content_section_type"]) == "EMBIBEEXPLAINERSVIDEOS_S0":
+                Embibe_Explainers = True
+                # print(Embibe_Explainers)
+                break
+        Books = False
+        for item in response1.json():
+            if str(item["content_section_type"]) == "BOOKS_S0":
+                Books = True
+                break
+        Learn = False
+        for item in response1.json():
+            
+            if str(item["content_section_type"]) == "EMBIBESYLLABUSLEARN_S0":
+                Learn = True
+                break
+        Enrich_learning = False
+        for item in response1.json():
+            if str(item["content_section_type"]) == "ENRICHYOURLEARNING_S0":
+                Enrich_learning = True
+                break
 
+        # df_positive_results = pd.read_csv("positive_learn_results.csv")
+        if Embibe_Explainers == True and Books == True and Learn == True and Enrich_learning == True:
+            df_positive_results_all_subjects.loc[len(df_positive_results_all_subjects)] = home_data + ["", "", random.randint(0, 1000000), "",
+                                                                                         "INDIVIDUAL", "", "",
+                                                                                         "All subject", "", "", Embibe_Explainers, Books,
+                                                                                         Learn, Enrich_learning]
 
+            df_positive_results_all_subjects.to_csv("positive_learn_results_all_subjects.csv", index=False)
+        else:
+            df_negative_results_all_subjects.loc[len(df_negative_results_all_subjects)] = home_data + ["", "", random.randint(0, 1000000), "",
+                                                                                         "INDIVIDUAL", "", "",
+                                                                                         "All subject", "", "", Embibe_Explainers, Books,
+                                                                                         Learn, Enrich_learning]
+
+            df_negative_results_all_subjects.to_csv("negative_learn_results_all_subjects.csv", index=False)
 
 
 def home_data(child_id, board, grade, exam, goal, embibe_token):

@@ -36,6 +36,8 @@ def video_book_validation(df,csv_name):
     df["Correctly present in CG"]=[""]*len(df)
 
     for ind in df.index:
+        if df["Section_name"][ind]=="INDIVIDUAL":
+            continue
         if df["Type"][ind]=="Video":
             answer =check_grade_by_video_id(df["Id"][ind],df["Grade"][ind])
             df["Correctly present in CG"][ind]= answer
@@ -66,10 +68,10 @@ def hero_banner_checker(payload, df_negative_results, df_positive_results, name1
                     subject_tagged=data["subject"]
 
                     if title == "" or description == "" or duration == "" or duration == 0 or embium_coins < 0 or id == "" or Type == "" or section_id != 100  :
-                        df_negative_results.loc[len(df_negative_results)] = home_data + [duration, Type, id, title,"HEROBANNER", embium_coins,subject,subject_tagged,"",""]
+                        df_negative_results.loc[len(df_negative_results)] = home_data + [duration, Type, id, title,"HEROBANNER", embium_coins,subject,subject_tagged,"","","","","",""]
                         df_negative_results.to_csv(name1, index=False)
                     else:
-                        df_positive_results.loc[len(df_positive_results)] = home_data + [duration, Type, id, title,"HEROBANNER", embium_coins,subject,subject_tagged,"",""]
+                        df_positive_results.loc[len(df_positive_results)] = home_data + [duration, Type, id, title,"HEROBANNER", embium_coins,subject,subject_tagged,"","","","","",""]
                         df_positive_results.to_csv(name2, index=False)
         if flag == 1:
             break

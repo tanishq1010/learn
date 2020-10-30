@@ -71,6 +71,3 @@ def check_grade_by_video_id(video_id,grade):
             return "Yes"
         else:
             return "No"
-
-# print(get_grade_by_video_id("34735599","10"))
-
