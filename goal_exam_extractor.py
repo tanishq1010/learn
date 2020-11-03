@@ -34,7 +34,7 @@ class Source(object):
         if response1.status_code == 200 and response1.json()["success"] == True:
             for goal in response1.json()["data"]:
                 _goal = goal["display_name"]
-                if _goal == 'CBSE' or _goal == 'Banking' or _goal == 'Engineering' or _goal == 'Medical':
+                if _goal == 'CBSE' or _goal == 'Banking' or _goal == 'Engineering' or _goal == 'Medical' or _goal == 'Insurance' or _goal == 'Defence' or _goal == 'SSC' or _goal == 'Teaching' or _goal=='Railways':
 
                     for exam in goal["exam"]:
                         # home = []
