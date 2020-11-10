@@ -79,8 +79,12 @@ def hero_banner_checker(payload, df_negative_results, df_positive_results, name1
                     df_herobanner_csv= df_herobanner_csv[df_herobanner_csv['exam'].str.contains(exam)]
                     
                     # df_herobanner_csv["videoId"][0]
-                    # print(df_herobanner_csv["videoTitle"][0])
+                    # print(df_herobanner_csv)
                     # print(len(df_herobanner_csv),"------_---_--_-____-_----_-_-__-_")
+                    # print(title)
+                    df_herobanner_csv.reset_index(drop=True, inplace=True)
+                    # print(df_herobanner_csv)
+                    print(df_herobanner_csv['videoTitle'][0])
                     # print(title)
 
                     if title == "" or description == "" or duration == "" or duration == 0 or embium_coins < 0 or id == "" or Type == "" or section_id != 100  or title!=str(df_herobanner_csv["videoTitle"][0]) :
