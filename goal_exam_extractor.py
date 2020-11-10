@@ -34,15 +34,15 @@ class Source(object):
         if response1.status_code == 200 and response1.json()["success"] == True:
             for goal in response1.json()["data"]:
                 _goal = goal["display_name"]
-                if _goal == 'CBSE' or _goal == 'Banking' or _goal == 'Engineering' or _goal == 'Medical' or _goal == 'Insurance' or _goal == 'Defence' or _goal == 'SSC' or _goal == 'Teaching' or _goal=='Railways':
+                if _goal == 'CBSE' or _goal == 'Banking' or _goal == 'Engineering' or _goal == 'Medical' or _goal == 'Insurance' or _goal == 'Defence' or _goal == 'SSC' or _goal == 'Teaching' or _goal=='Railways'  :
 
                     for exam in goal["exam"]:
                         # home = []
 
                         if str(exam["grade"]) != "None":
-                            home_data.append([_goal, str(exam["grade"]), str(exam["name"])])
+                            home_data.append([_goal, str(exam["grade"]), str(exam["name"]),str(exam["format_reference"])])
 
-        df = pd.DataFrame(data=home_data, columns=["Goal", "Grade", "Exam_name"])
+        df = pd.DataFrame(data=home_data, columns=["Goal", "Grade", "Exam_name","Format_refrence"])
 
         # df1 = df
         # df2 = df

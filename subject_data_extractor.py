@@ -33,8 +33,7 @@ class Source(object):
             "exam_name": exam,
             "goal": goal,
             "grade": grade,
-            "onlyPractise": "false",
-            "fetch_all_content":"true"
+            "onlyPractise": "false"
         }
         response1 = self.callAPI(
             f"/fiber_ms/v1/home/{subject}",
@@ -123,8 +122,10 @@ class Source(object):
                 break
         Learn = False
         for item in response1.json():
-            
-            if str(item["section_name"]) == str("Learn " + str(subject) + " Chapters From " + str(exam)):
+            # print(str("Learn " + str(subject) + " Chapters From " + str(exam)))
+            # print(str(item["section_name"]),"_------____--__________---")
+            if str(item["section_name"]) == str("Learn " + str(subject) + " Chapters from " + str(exam)):
+                # print(str("Learn " + str(subject) + " Chapters From " + str(exam)))
                 Learn = True
                 break
         Enrich_learning = False
@@ -136,18 +137,19 @@ class Source(object):
         # df_positive_results = pd.read_csv("positive_learn_results.csv")
         if Embibe_Explainers == True and Books == True and Learn == True and Enrich_learning == True:
             df_positive_results.loc[len(df_positive_results)] = home_data + ["", "", random.randint(0, 1000000), "",
-                                                                                         "INDIVIDUAL", "", "",
+                                                                                         "All carousals present", "", "",
                                                                                          subject, "", "", Embibe_Explainers, Books,
                                                                                          Learn, Enrich_learning]
 
             df_positive_results.to_csv("positive_learn_results.csv", index=False)
         else:
             df_negative_results.loc[len(df_negative_results)] = home_data + ["", "", random.randint(0, 1000000), "",
-                                                                                         "INDIVIDUAL", "", "",
+                                                                                         "All carousals present", "", "",
                                                                                          subject, "", "", Embibe_Explainers, Books,
                                                                                          Learn, Enrich_learning]
 
             df_negative_results.to_csv("negative_learn_results.csv", index=False)
+        # print(df_positive_results['Section_name'])
 
         
 
