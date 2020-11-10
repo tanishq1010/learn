@@ -72,27 +72,32 @@ def hero_banner_checker(payload, df_negative_results, df_positive_results, name1
                     id = data["id"]
                     Type = data["type"]
                     subject_tagged=data["subject"]
-                    df_herobanner_csv=pd.read_csv('LearnHeroBanner.csv')
-                    goal=home_data[2]
-                    exam=home_data[1]
-                    df_herobanner_csv= df_herobanner_csv[df_herobanner_csv['goal'].str.contains(goal)]
-                    df_herobanner_csv= df_herobanner_csv[df_herobanner_csv['exam'].str.contains(exam)]
                     
-                    # df_herobanner_csv["videoId"][0]
+                    
+                    try:
+                    	print("HERO BANNER CHECK WITH CVS WORKING")
+                    	df_herobanner_csv=pd.read_csv('LearnHeroBanner.csv')
+                    	goal=home_data[2]
+                    	exam=home_data[1]
+                    	df_herobanner_csv= df_herobanner_csv[df_herobanner_csv['goal'].str.contains(goal)]
+                    	df_herobanner_csv= df_herobanner_csv[df_herobanner_csv['exam'].str.contains(exam)]
+                    	df_herobanner_csv.reset_index(drop=True, inplace=True)
                     # print(df_herobanner_csv)
-                    # print(len(df_herobanner_csv),"------_---_--_-____-_----_-_-__-_")
-                    # print(title)
-                    df_herobanner_csv.reset_index(drop=True, inplace=True)
-                    # print(df_herobanner_csv)
-                    print(df_herobanner_csv['videoTitle'][0])
-                    # print(title)
-
-                    if title == "" or description == "" or duration == "" or duration == 0 or embium_coins < 0 or id == "" or Type == "" or section_id != 100  or title!=str(df_herobanner_csv["videoTitle"][0]) :
-                        df_negative_results.loc[len(df_negative_results)] = home_data + [duration, Type, id, title,"HEROBANNER", embium_coins,subject,subject_tagged,"","","","","",""]
-                        df_negative_results.to_csv(name1, index=False)
-                    else:
-                        df_positive_results.loc[len(df_positive_results)] = home_data + [duration, Type, id, title,"HEROBANNER", embium_coins,subject,subject_tagged,"","","","","",""]
-                        df_positive_results.to_csv(name2, index=False)
+                    
+                    	if title == "" or description == "" or duration == "" or duration == 0 or embium_coins < 0 or id == "" or Type == "" or section_id != 100  or title!=str(df_herobanner_csv["videoTitle"][0]) :
+                        	df_negative_results.loc[len(df_negative_results)] = home_data + [duration, Type, id, title,"HEROBANNER", embium_coins,subject,subject_tagged,"","","","","",""]
+                        	df_negative_results.to_csv(name1, index=False)
+                    	else:
+                        	df_positive_results.loc[len(df_positive_results)] = home_data + [duration, Type, id, title,"HEROBANNER", embium_coins,subject,subject_tagged,"","","","","",""]
+                        	df_positive_results.to_csv(name2, index=False)
+                    except:
+                    	print("HERO BANNER CHECK WITH CVS NOT WORKING")
+                    	if title == "" or description == "" or duration == "" or duration == 0 or embium_coins < 0 or id == "" or Type == "" or section_id != 100  :
+                        	df_negative_results.loc[len(df_negative_results)] = home_data + [duration, Type, id, title,"HEROBANNER", embium_coins,subject,subject_tagged,"","","","","",""]
+                        	df_negative_results.to_csv(name1, index=False)
+                    	else:
+                        	df_positive_results.loc[len(df_positive_results)] = home_data + [duration, Type, id, title,"HEROBANNER", embium_coins,subject,subject_tagged,"","","","","",""]
+                        	df_positive_results.to_csv(name2, index=False)
         if flag == 1:
             break
 
