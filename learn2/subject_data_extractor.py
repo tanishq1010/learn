@@ -33,12 +33,38 @@ class Source(object):
             "exam_name": exam,
             "goal": goal,
             "grade": grade,
-            "onlyPractise": "false"
+            "onlyPractise": "false",
+            "fetch_all_content":"true"
         }
         response1 = self.callAPI(
             f"/fiber_ms/v1/home/{subject}",
             json.dumps(payload),
             'POST', embibe_token)
+        count=0
+        book_count=0
+        embibe_explainers_count=0
+        learn_count=0
+        enrich_count=0
+        for item in response1.json():
+         
+         explainer='EMBIBEEXPLAINERSVIDEOS'
+         books='BOOKS'
+         learn='EMBIBESYLLABUSLEARN' 
+         enrich='ENRICHYOURLEARNING'
+         if item['content_section_type']=="SUBJECTS":
+            for data in item["content"]:
+                count+=1
+         if item['content_section_type'].find(explainer)==0:
+            embibe_explainers_count+=1
+         if item['content_section_type'].find(books)==0:
+            book_count+=1
+         if item['content_section_type'].find(learn)==0:
+            learn_count+=1
+         if item['content_section_type'].find(enrich)==0:
+            enrich_count+=1
+         print(count,embibe_explainers_count,book_count,learn_count,enrich_count)
+
+
         for item in response1.json():
             if item["content_section_type"] == "HEROBANNER":
                 hero_banner_checker(response1.json(), df_negative_results, df_positive_results,
@@ -108,45 +134,68 @@ class Source(object):
 
         # print(pd.read_csv("positive_learn_results.csv"))
 
+
+
         Embibe_Explainers = False
-        for item in response1.json():
-            if str(item["section_name"]) == str("Embibe Explainers for "+str(subject)):
+        if count==embibe_explainers_count:
                 Embibe_Explainers = True
-                print(Embibe_Explainers)
-                break
+                # print(Embibe_Explainers)
+                # break
         Books = False
-        for item in response1.json():
-            
-            if str(item["section_name"]) == str("Books With Videos & Solutions - " + str(subject)):
+        if count == book_count:
                 Books = True
-                break
+                # break
         Learn = False
-        for item in response1.json():
-            
-            if str(item["section_name"]) == str("Learn " + str(subject) + " Chapters From " + str(exam)):
+        if count==learn_count:
                 Learn = True
-                break
+                # break
         Enrich_learning = False
-        for item in response1.json():
-            if str(item["section_name"]) == str("Enrich Your Learning – " + str(subject)):
+        if count==enrich_count:
                 Enrich_learning = True
-                break
+                # break
+
+        # Embibe_Explainers = False
+        # for item in response1.json():
+        #     if str(item["section_name"]) == str("Embibe Explainers for "+str(subject)):
+        #         Embibe_Explainers = True
+        #         print(Embibe_Explainers)
+        #         break
+        # Books = False
+        # for item in response1.json():
+            
+        #     if str(item["section_name"]) == str("Books With Videos & Solutions - " + str(subject)):
+        #         Books = True
+        #         break
+        # Learn = False
+        # for item in response1.json():
+        #     # print(str("Learn " + str(subject) + " Chapters From " + str(exam)))
+        #     # print(str(item["section_name"]),"_------____--__________---")
+        #     if str(item["section_name"]) == str("Learn " + str(subject) + " Chapters from " + str(exam)):
+        #         # print(str("Learn " + str(subject) + " Chapters From " + str(exam)))
+        #         Learn = True
+        #         break
+        # Enrich_learning = False
+        # for item in response1.json():
+        #     if str(item["section_name"]) == str("Enrich Your Learning – " + str(subject)):
+        #         Enrich_learning = True
+        #         break
 
         # df_positive_results = pd.read_csv("positive_learn_results.csv")
         if Embibe_Explainers == True and Books == True and Learn == True and Enrich_learning == True:
             df_positive_results.loc[len(df_positive_results)] = home_data + ["", "", random.randint(0, 1000000), "",
-                                                                                         "INDIVIDUAL", "", "",
+                                                                                         "All carousals present", "", "",
                                                                                          subject, "", "", Embibe_Explainers, Books,
                                                                                          Learn, Enrich_learning]
 
             df_positive_results.to_csv("positive_learn_results.csv", index=False)
         else:
             df_negative_results.loc[len(df_negative_results)] = home_data + ["", "", random.randint(0, 1000000), "",
-                                                                                         "INDIVIDUAL", "", "",
+                                                                                         "All carousals present", "", "",
                                                                                          subject, "", "", Embibe_Explainers, Books,
                                                                                          Learn, Enrich_learning]
 
             df_negative_results.to_csv("negative_learn_results.csv", index=False)
+        # print(df_positive_results['Section_name'])
 
         
 
