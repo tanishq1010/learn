@@ -30,21 +30,21 @@ if __name__ == '__main__':
     df_negative_results_all_subjects = pd.DataFrame(columns=['Child_ID', 'Exam', 'Goal', "Grade",
                                                              'Duration', 'Type', 'Id', "Title", 'Section_name',
                                                              'Embium_counts', "Subject", "Subject_tagged",
-                                                             "present in subject", "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present"])
+                                                             "present in subject", "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present",'description present'])
     df_positive_results_all_subjects = pd.DataFrame(columns=['Child_ID', 'Exam', 'Goal', "Grade",
                                                              'Duration', 'Type', 'Id', "Title", 'Section_name',
                                                              'Embium_counts', "Subject", "Subject_tagged",
-                                                             "present in subject", "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present"])
+                                                             "present in subject", "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present",'description present'])
     df_negative_results_all_subjects.to_csv("negative_learn_results_all_subjects.csv", index=False)
     df_positive_results_all_subjects.to_csv("positive_learn_results_all_subjects.csv", index=False)
     df_negative_results = pd.DataFrame(columns=['Child_ID', 'Exam', 'Goal', "Grade",
                                                 'Duration', 'Type', 'Id', "Title", 'Section_name',
                                                 'Embium_counts', "Subject", "Subject_tagged", "present only once",
-                                                "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present"])
+                                                "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present",'description present'])
     df_positive_results = pd.DataFrame(columns=['Child_ID', 'Exam', 'Goal', "Grade",
                                                 'Duration', 'Type', 'Id', "Title", 'Section_name',
                                                 'Embium_counts', "Subject", "Subject_tagged", "present only once",
-                                                "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present"])
+                                                "Correctly present in CG","Embibe Explainers Present","Book Section Present","Learn Section Present","Enrich Learning Present",'description present'])
     df_negative_results.to_csv("negative_learn_results.csv", index=False)
     df_positive_results.to_csv("positive_learn_results.csv", index=False)
 
@@ -73,9 +73,9 @@ if __name__ == '__main__':
     signup_data=Signup()
     login_data=login(signup_data[0],"embibe1234")
         
-    embibe_token=login_data[1]
-    child_id=signup_data[1]
-    main(pd.read_csv('goal_exam.csv'),child_id,embibe_token)
+    # embibe_token=login_data[1]
+    # child_id=signup_data[1]
+    # main(pd.read_csv('goal_exam.csv'),child_id,embibe_token)
 
     
     
@@ -90,7 +90,7 @@ if __name__ == '__main__':
     #     board=goal
     #     home_data1(child_id, board, grade, exam, goal, embibe_token)
     
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
 #     df_exam_subject= pd.read_csv('exam_with_subject.csv')
 #     # print(df_exam_subject)
@@ -144,4 +144,4 @@ if __name__ == '__main__':
 
         
 
-    
+#     

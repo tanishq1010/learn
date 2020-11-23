@@ -86,12 +86,16 @@ class Source(object):
                     id = split_string[0]
                     Type = data["type"]
                     subject_tagged = data["subject"]
-                    if title == "" or description == "" or length == "" or length == 0 or currency < 0 or id == "" or Type == "":
+                    if description=="":
+                        description=False
+                    else:
+                        description=True
+                    if title == ""  or length == "" or length == 0 or currency < 0 or id == "" or Type == "":
                         length = minutes_converter(length)
                         df_negative_results.loc[len(df_negative_results)] = home_data + [length, Type, id, title,
                                                                                          section_name, currency,
                                                                                          subject, subject_tagged, "",
-                                                                                         "", "", "", "", ""]
+                                                                                         "", "", "", "", "",description]
 
                         df_negative_results.to_csv("negative_learn_results.csv", index=False)
                     else:
@@ -99,7 +103,7 @@ class Source(object):
                         df_positive_results.loc[len(df_positive_results)] = home_data + [length, Type, id, title,
                                                                                          section_name, currency,
                                                                                          subject, subject_tagged, "",
-                                                                                         "", "", "", "", ""]
+                                                                                         "", "", "", "", "",description]
 
                         df_positive_results.to_csv("positive_learn_results.csv", index=False)
 
@@ -116,18 +120,22 @@ class Source(object):
                     id = split_string[0]
                     Type = data["type"]
                     subject_tagged = data["subject"]
-                    if title == "" or id == "" or Type == "" or description == "":
+                    if description=="":
+                        description=False
+                    else:
+                        description=True
+                    if title == "" or id == "" or Type == "" :
                         df_negative_results.loc[len(df_negative_results)] = home_data + ["", Type, id, title,
                                                                                          section_name, "", subject,
                                                                                          subject_tagged, "", "", "", "",
-                                                                                         "", ""]
+                                                                                         "", "",description]
 
                         df_negative_results.to_csv("negative_learn_results.csv", index=False)
                     else:
                         df_positive_results.loc[len(df_positive_results)] = home_data + ["", Type, id, title,
                                                                                          section_name, "", subject,
                                                                                          subject_tagged, "", "", "", "",
-                                                                                         "", ""]
+                                                                                         "", "",description]
 
                         df_positive_results.to_csv("positive_learn_results.csv", index=False)
 
@@ -185,14 +193,14 @@ class Source(object):
             df_positive_results.loc[len(df_positive_results)] = home_data + ["", "", random.randint(0, 1000000), "",
                                                                                          "All carousals present", "", "",
                                                                                          subject, "", "", Embibe_Explainers, Books,
-                                                                                         Learn, Enrich_learning]
+                                                                                         Learn, Enrich_learning,""]
 
             df_positive_results.to_csv("positive_learn_results.csv", index=False)
         else:
             df_negative_results.loc[len(df_negative_results)] = home_data + ["", "", random.randint(0, 1000000), "",
                                                                                          "All carousals present", "", "",
                                                                                          subject, "", "", Embibe_Explainers, Books,
-                                                                                         Learn, Enrich_learning]
+                                                                                         Learn, Enrich_learning,""]
 
             df_negative_results.to_csv("negative_learn_results.csv", index=False)
         # print(df_positive_results['Section_name'])
