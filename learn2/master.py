@@ -22,7 +22,7 @@ def for_all_exam_goal(goal_exam_grade):
         home_data(child_id, goal_exam_grade["Goal"][ind], goal_exam_grade["Grade"][ind],
                   goal_exam_grade["Exam_name"][ind],
                   goal_exam_grade["Goal"][ind],embibe_token)
-        # break
+        break
 
 
 if __name__ == '__main__':

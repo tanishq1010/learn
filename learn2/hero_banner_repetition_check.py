@@ -34,7 +34,7 @@ class Source(object):
             'primary_exam_code': exam_code,
             'primary_goal': goal_code
         }
-        response1 = self.callAPI2("https://preprodms.embibe.com/user_profile/edit_profile", json.dumps(payload1), 'PUT',token)
+        response1 = self.callAPI2("https://fiberdemoms.embibe.com/user_profile/edit_profile", json.dumps(payload1), 'PUT',token)
         # print(response1.status_code)
         payload2 = payload = {
             "board": goal,
@@ -45,7 +45,7 @@ class Source(object):
             "grade": grade
         }
         response2 = self.callAPI2(
-            f"https://preprodms.embibe.com/fiber_ms/v1/home",
+            f"https://fiberdemoms.embibe.com/fiber_ms/v1/home",
             json.dumps(payload2),
             'POST',token)
         home_data = []
